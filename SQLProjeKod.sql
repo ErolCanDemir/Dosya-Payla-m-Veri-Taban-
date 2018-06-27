@@ -110,22 +110,34 @@ Insert Into Dosya values (16,7,'yeni.mp3','1 GB',5);
 
 select * from Sistem where Sistem_id IN (
 	select Sistem_id from Dosya where Kullanici_id IN (
-		select Kullanici_id from Kullanici where Kullanici_ad = 'Erol Can'));
+		select Kullanici_id from Kullanici where Kullanici_ad = 'Erol Can')); /* Adý Erol Can olan kullanýcýnýn kullandýðý sistem ve özellikleri. */
 
 select * from Tur where Tur_id IN (
 	select Tur_id from Dosya where Kullanici_id IN (
 		select Kullanici_id from Kullanici where Ulke_id IN (
-			select Ulke_id from Ulke where Ulke_ad = 'Türkiye')));
+			select Ulke_id from Ulke where Ulke_ad = 'Türkiye'))); /* Türkiyede Kullanýlan dosya türleri. */
 
 select Count(Dosya_no) AS 'Belçika dan Dosya' from Dosya where Kullanici_id IN  (
 	select Kullanici_id from Kullanici where Ulke_id IN (
-		select Ulke_id from Ulke where Ulke_ad = 'Belçika'));
+		select Ulke_id from Ulke where Ulke_ad = 'Belçika')); /* Belçikadan gönderilen dosyalarýn sayýsý. */
 
 select * from Sistem where Sistem_id IN (
 	select Sistem_id from Dosya where Kullanici_id IN (
-		select Kullanici_id from Kullanici where Kullanici_meslek = 'Mühendis'));
+		select Kullanici_id from Kullanici where Kullanici_meslek = 'Mühendis')); /* Mesleði mühendis olanlarýn kullandýðý sistemler. */
 
 select * from Ulke where Ulke_id IN(
 	select Ulke_id from Kullanici where Kullanici_id IN (
 		select Kullanici_id from Dosya where Sistem_id IN (
-			select Sistem_id from Sistem where Sistem_Yazilim_Sirketi = 'Google')));
+			select Sistem_id from Sistem where Sistem_Yazilim_Sirketi = 'Google'))); /* Google yazýlým þirketinin kullanýldýðý ülkeler. */
+
+select * from Sistem where Sistem_id IN (
+	select Sistem_id from Dosya where Kullanici_id IN (
+		select Kullanici_id from Kullanici where Ulke_id IN (
+			select Ulke_id from Ulke where Ulke_ad = 'Belçika' ))); /* Belçikada kullanýlan dosya sistemleri */
+
+select Count(Dosya_no) As 'Google ile Yollanan' from Dosya where Sistem_id IN (
+	select Sistem_id from Sistem where Sistem_Yazilim_Sirketi= 'Google'); /* Google yazýlým þirketinin ürettiði sistemler kullanarak paylaþýlan dosyalarýn sayýsý. */
+
+select Count(Tur_id) AS 'Murat Tur Sayisi'  from Tur where Tur_id IN (
+	select Tur_id from Dosya where Kullanici_id IN (
+		select Kullanici_id from Kullanici where Kullanici_ad = 'Murat')); /* Adý Murat olan kullanýcýnýn kullandýðý tür sayýsý. */
